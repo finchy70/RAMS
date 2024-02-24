@@ -8,38 +8,41 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/trix.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/my.css') }}">
+
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Scripts -->
+{{--        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>--}}
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{asset('/js/trix.js')}}"></script>
+        <script src="{{ asset('js/attachments.js') }}"></script>
         @livewireStyles
+        @yield('scripts')
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
-
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
-
+        @include('layouts.navigation')
+        <x-notification></x-notification>
+        <div class="bg-gray-50">
             <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8">
+                    {{ $header ?? '' }}
+                </div>
+            </header>
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8">
+                <div>
+                    {{ $slot }}
+                </div>
             </main>
         </div>
-
-        @stack('modals')
-
-        @livewireScripts
+    @livewireScripts
     </body>
 </html>

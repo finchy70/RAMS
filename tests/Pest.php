@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use function Pest\Laravel\seed;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,7 @@ use Tests\TestCase;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses(TestCase::class, RefreshDatabase::class)->in('Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +45,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function seedClient(): void
 {
-    // ..
+    if(Client::query()->count() == 0) {
+        seed(\Database\Seeders\ClientSeeder::class);
+    }
 }
