@@ -51,7 +51,7 @@ it('doesnt display rams created by a different user.', closure: function () {
 it('shows the Add New Rams button', function () {
     actingAs( User::factory()->create());
     livewire(UserDashboard::class)
-        ->assertSee('Add New rams');
+        ->assertSee('Add New RAMS');
 });
 
 it('redirects to the Create rams menu when you click Add New rams button as an EPS user', function () {
