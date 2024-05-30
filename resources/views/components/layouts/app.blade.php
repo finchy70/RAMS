@@ -26,7 +26,7 @@
 
     </head>
     <body class="font-sans antialiased">
-        <div class="bg-gray-50">
+        <div class="bg-gray-500">
             @include('layouts.navigation')
             <x-notification></x-notification>
 
@@ -38,7 +38,7 @@
             </header>
 
             <!-- Page Content -->
-            <main class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8">
+            <main class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8 bg-gray-50">
                 {{ $slot }}
             </main>
         </div>

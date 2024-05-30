@@ -25,10 +25,10 @@
         @livewireStyles
         @yield('scripts')
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-gray-50">
         @include('layouts.navigation')
         <x-notification></x-notification>
-        <div class="bg-gray-50">
+        <div>
             <!-- Page Heading -->
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8">

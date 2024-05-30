@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\ErrorController;
 use App\Livewire\dashboard\UserDashboard;
-use App\Livewire\Rams\EditRams;
+use App\Livewire\rams\rams\EditRams;
 use App\Livewire\rams\rams\NewRamsMenu;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'eps'
 ])->group(function () {
     Route::get('/', UserDashboard::class)->name('dashboard');
 
@@ -43,3 +45,5 @@ Route::middleware([
 
     Route::get('/data-setup', [])->name('data-setup.index');
 });
+
+Route::get('/errors/401', [ErrorController::class, 'error401'])->name('errors.401');

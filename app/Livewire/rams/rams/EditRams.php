@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Livewire\rams;
+namespace App\Livewire\rams\rams;
 
 use App\Models\Rams;
-use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
 
 class EditRams extends Component
 {
-    public function mount(Rams $ram): void
+    public ?Rams $editRams;
+
+    public function mount(Rams $rams): void
     {
-        dd($ram);
+        $this->editRams = $rams;
     }
     public function render()
     {
