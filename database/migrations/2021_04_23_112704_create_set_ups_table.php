@@ -17,6 +17,7 @@ class CreateSetUpsTable extends Migration
             $table->id();
             $table->text('title');
             $table->longText('setup');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

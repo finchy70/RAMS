@@ -8,7 +8,7 @@ it('shows the welcome screen', function () {
     get('/')->assertSeeText('Welcome to EPS-rams');
 });
 
-it('shows the Dashboard screen', function () {
+it('shows the dashboard screen', function () {
     actingAs(User::factory()->create());
-   get('/dashboard')->assertSeeText('Dashboard');
+   get('/dashboard')->assertSeeText('dashboard');
 });

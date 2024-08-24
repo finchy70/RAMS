@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ErrorController;
-use App\Livewire\dashboard\UserDashboard;
-use App\Livewire\rams\rams\EditRams;
-use App\Livewire\rams\rams\NewRamsMenu;
+use App\Livewire\Dashboard\UserDashboard;
+use App\Livewire\Methods\IndexMethods;
+use App\Livewire\Prelims\IndexPrelims;
+use App\Livewire\Rams\EditRams;
+use App\Livewire\Rams\NewRamsMenu;
+use App\Livewire\Setups\IndexSetups;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([
     'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-    'eps'
+    config('jetstream.auth_session')
 ])->group(function () {
     Route::get('/', UserDashboard::class)->name('dashboard');
 
@@ -31,13 +32,13 @@ Route::middleware([
     Route::get('/rams-create', [])->name('rams.create');
     Route::get('/edit-rams/{rams}', EditRams::class)->name('editRams');
 
-    Route::get('/setup', [])->name('setup.index');
+    Route::get('/setup', IndexSetups::class)->name('setup.index');
 
-    Route::get('/prelims', [])->name('prelims.index');
+    Route::get('/prelims', IndexPrelims::class)->name('prelims.index');
 
     Route::get('/ppe', [])->name('ppe.index');
 
-    Route::get('/methods', [])->name('methods.index');
+    Route::get('/methods', IndexMethods::class)->name('methods.index');
 
     Route::get('/controls', [])->name('controls.index');
 

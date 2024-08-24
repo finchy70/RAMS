@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\SetUp;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SetUpFactory extends Factory
@@ -13,7 +14,8 @@ class SetUpFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
-            'setup' => $this->faker->paragraph
+            'setup' => $this->faker->paragraph,
+            'user_id' => $this->faker->numberBetween(1,User::all()->count()),
         ];
     }
 }

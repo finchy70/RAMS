@@ -10,6 +10,11 @@ class Method extends Model
 {
     use HasFactory;
 
+    public function user(): belongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function methodCategory(): BelongsTo
     {
         return $this->belongsTo(MethodCategory::class);

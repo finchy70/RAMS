@@ -1,35 +1,37 @@
 <?php
 
-namespace App\Livewire\rams\rams;
+namespace App\Livewire\Rams;
 
 use App\Models\Method;
-use App\Models\Ppe;
+use App\Models\MethodCategory;
 use App\Models\Prelim;
 use App\Models\SetUp;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
 
 class NewRamsMenu extends Component
 {
     public ?int $prelimId = null;
     public ?int $setupId = null;
+    public ?int $methodCategoryId = null;
     public ?int $methodId = null;
     public bool $showPrelimButton = false;
     public bool $showSetupButton = false;
     public bool $showMethodButton = false;
+    public bool $showMethod = false;
     public bool $showModal = false;
     public String $title = "";
     public String $content = "";
 
-    public function mount()
+    public function mount(): mixed
     {
         if(auth()->user()->client_id != 1){
             session()->flash('message', "You are not authorised to perform this action.");
             return redirect(route('dashboard'));
         }
+        return null;
     }
 
     public function updatedPrelimId($id): void
@@ -47,6 +49,15 @@ class NewRamsMenu extends Component
             $this->showSetupButton = false;
         } else {
             $this->showSetupButton = true;
+        }
+    }
+
+    public function updatedMethodCategoryId($id): void
+    {
+        if($id == null) {
+            $this->showMethod = false;
+        } else {
+            $this->showMethod = true;
         }
     }
 
@@ -75,7 +86,7 @@ class NewRamsMenu extends Component
         $this->showModal = true;
     }
 
-    public function showMethod($id): void
+    public function showMethodDetails($id): void
     {
         $method = Method::query()->where('id', $id)->first();
         $this->title = "Method - ".$method->description;
@@ -87,10 +98,16 @@ class NewRamsMenu extends Component
     {
         $prelims = Prelim::query()->orderBy('title')->get();
         $setups = SetUp::query()->orderBy('title')->get();
-        $methods = Method::query()->orderBy('description')->get();
+        $methodCategories = MethodCategory::query()->orderBy('category')->get();
+        if($this->methodCategoryId != null){
+            $methods = Method::query()->where('method_category_id', $this->methodCategoryId)->orderBy('description')->get();
+        } else {
+            $methods = collect();
+        }
         return view('livewire.rams.new-rams-menu', [
             'prelims' => $prelims,
             'setups' => $setups,
+            'methodCategories' => $methodCategories,
             'methods' => $methods
         ]);
     }

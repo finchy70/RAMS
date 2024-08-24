@@ -21,13 +21,30 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()->create([
             'name' => 'Paul Finch',
             'email' => 'finchy70@gmail.com',
+            'client_id' => 1,
             'password' => bcrypt('shandy'),
             'email_verified_at' => now()
         ]);
 
+        $secondUser = User::factory()->create([
+            'name' => 'Lisa Finch',
+            'email' => 'finchy71@gmail.com',
+            'client_id' => 1,
+            'password' => bcrypt('shandy'),
+            'email_verified_at' => now()
+        ]);
+
+        Client::query()->create([
+            'name' => 'EPS'
+        ]);
 
         Rams::factory()
             ->for($user)
+            ->count(20)
+            ->create();
+
+        Rams::factory()
+            ->for($secondUser)
             ->count(20)
             ->create();
     }

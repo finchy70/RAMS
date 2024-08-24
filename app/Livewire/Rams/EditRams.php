@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\rams\rams;
+namespace App\Livewire\Rams;
 
 use App\Models\Rams;
 use Livewire\Component;

@@ -35,20 +35,18 @@
                             <a href="{{route('dashboard')}}" class="{{request()->route()->named('dashboard*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Dashboard
                             </a>
-                            <a href="{{route('rams.create')}}" class="{{request()->route()->named('rams*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                All RAMS
+                            <a href="{{route('prelims.index')}}" class="{{request()->route()->named('prelims*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                Prelims
                             </a>
                             <a href="{{route('setup.index')}}" class="{{request()->route()->named('setup*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Set Ups
                             </a>
-                            <a href="{{route('prelims.index')}}" class="{{request()->route()->named('prelims*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                Prelims
+                            <a href="{{route('methods.index')}}" class="{{request()->route()->named('methods*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                Methods
                             </a>
                             <a href="{{route('ppe.index')}}" class="{{request()->route()->named('ppe*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 PPE
                             </a>
-                            <a href="{{route('methods.index')}}" class="{{request()->route()->named('methods*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                                Methods
                             <a href="{{route('controls.index')}}" class="{{request()->route()->named('controls.*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Controls
                             </a>
@@ -73,23 +71,20 @@
                     <div class="ml-3 relative">
                         <div>
                             <button @click="open = !open" @click.away="open = false" type="button" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                @Auth
+                                @auth
                                     {{Auth::user()->name}}
                                 @endAuth
                             </button>
                         </div>
                         <div x-show="open" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                             <!-- Active: "bg-gray-100", Not Active: "" -->
-                            @Auth
+                            @auth
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="user-menu-item-0">{{Auth::user()->name}}</a>
-
-                                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                   onclick="event.preventDefault();
-                                                             document.getElementById('logout-form1').submit();">
-                                    Sign Out
-                                </a>
-                                <form id="logout-form1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form1" action="{{ route('logout') }}" method="POST">
                                     @csrf
+                                    <button type="submit" class="w-full text-left px-4 font-bold py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="user-menu-item-1">
+                                        Sign Out
+                                    </button>
                                 </form>
                             @endAuth
                         </div>
@@ -98,15 +93,16 @@
             </div>
         </div>
         @Auth
-            <div x-show="mobileOpen" class="sm:hidden" id="mobile-menu">
+            <div x-show="mobileOpen" class="md:hidden" id="mobile-menu">
                 <div class="pt-2 pb-4 space-y-1">
                     <a href="{{route('dashboard')}}#" class="{{request()->route()->named('dashboard*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
-                    <a href="{{route('rams.create')}}#" class="{{request()->route()->named('rams*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">RAMS</a>
+                    <a href="{{route('prelims.index')}}#" class="{{request()->route()->named('prelims*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Prelims</a>
                     <a href="{{route('setup.index')}}#" class="{{request()->route()->named('setup*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Set Ups</a>
-                    <a href="{{route('prelims.index')}}#" class="{{request()->route()->named('prelims*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Preliminaries</a>
-                    <a href="{{route('ppe.index')}}#" class="{{request()->route()->named('ppe*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Preliminaries</a>
-                    <a href="{{route('methods.index')}}#" class="{{request()->route()->named('methods*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Method Statements</a>
-                    <a href="{{route('risks.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Risk Assessemnts</a>
+                    <a href="{{route('methods.index')}}#" class="{{request()->route()->named('methods*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Methods</a>
+                    <a href="{{route('ppe.index')}}#" class="{{request()->route()->named('ppe*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">PPE</a>
+                    <a href="{{route('controls.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Controls</a>
+                    <a href="{{route('risks.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Risks</a>
+                    <a href="{{route('risks.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Data Setup</a>
                     <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium" onclick="event.preventDefault(); document.getElementById('logout-form1').submit();">Sign Out</a>
                 </div>
             </div>

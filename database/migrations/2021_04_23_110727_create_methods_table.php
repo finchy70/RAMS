@@ -17,6 +17,7 @@ class CreateMethodsTable extends Migration
             $table->id();
             $table->text('description');
             $table->unsignedBigInteger("method_category_id");
+            $table->unsignedBigInteger('user_id');
             $table->longText('method')->nullable();
             $table->timestamps();
         });

@@ -17,6 +17,7 @@ class CreatePrelimsTable extends Migration
             $table->id();
             $table->text('title');
             $table->longText('prelims');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

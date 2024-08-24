@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\dashboard;
+namespace App\Livewire\Dashboard;
 
 use App\Models\Rams;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,11 +13,21 @@ use Livewire\WithPagination;
 
 class UserDashboard extends Component
 {
+    public bool $all = false;
+
     use WithPagination;
 
-    public function newRams(): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
+    public function newRams(): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application|null
     {
-        return redirect()->to(route('newRamsMenu'));
+        if(auth()->user()->client_id == 1){
+            return redirect()->to(route('newRamsMenu'));
+        }
+        return null;
+    }
+
+    public function toggle():void
+    {
+        $this->all = !$this->all;
     }
 
     public function edit($id): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
@@ -27,7 +37,11 @@ class UserDashboard extends Component
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        $rams = Rams::query()->where('user_id', auth()->user()->id)->orderBy('job', 'desc')->paginate(15);
+        if($this->all){
+            $rams = Rams::query()->orderBy('job', 'desc')->paginate(15);
+        } else {
+            $rams = Rams::query()->where('user_id', auth()->user()->id)->orderBy('job', 'desc')->paginate(15);
+        }
         return view('livewire.dashboard.user-dashboard', compact('rams'));
     }
 }

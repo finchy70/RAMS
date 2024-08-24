@@ -33,20 +33,32 @@
             @endif
         </div>
         <div class="my-2">
-            <label for="method" class="block text-sm font-medium leading-6 text-gray-900">Method</label>
+            <label for="methodCategory" class="block text-sm font-medium leading-6 text-gray-900">Method Category</label>
             <div class="relative mt-2">
-                <select wire:model.live='methodId' name="method" id="method" class="w-full border border-gray-200 rounded-lg">
-                    <option value='{{null}}' class="block truncate">Please Select a Method</option>
-                    @foreach($methods as $method)
-                        <option value="{{$method->id}}">{{$method->description}}</option>
+                <select wire:model.live='methodCategoryId' name="methodCategory" id="methodCategory" class="w-full border border-gray-200 rounded-lg">
+                    <option value='{{null}}' class="block truncate">Please Select a Method Category</option>
+                    @foreach($methodCategories as $methodCategory)
+                        <option value="{{$methodCategory->id}}">{{$methodCategory->category}}</option>
                     @endforeach
                 </select>
             </div>
-            @if($showMethodButton)
-                <button wire:click='showMethod({{$methodId}})' type="button" class="mt-1 px-2 py-1 text-xs bg-indigo-400 rounded-lg text-white font-bold">Show Method</button>
-            @endif
         </div>
-
+        @if($showMethod)
+            <div class="my-2">
+                <label for="method" class="block text-sm font-medium leading-6 text-gray-900">Method</label>
+                <div class="relative mt-2">
+                    <select wire:model.live='methodId' name="method" id="method" class="w-full border border-gray-200 rounded-lg">
+                        <option value='{{null}}' class="block truncate">Please Select a Method</option>
+                        @foreach($methods as $method)
+                            <option value="{{$method->id}}">{{$method->description}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @if($showMethodButton)
+                    <button wire:click="showMethodDetails({{$methodId}})" type="button" class="mt-1 px-2 py-1 text-xs bg-indigo-400 rounded-lg text-white font-bold">Show Method</button>
+                @endif
+            </div>
+        @endif
     </div>
     @if($showModal)
         <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
