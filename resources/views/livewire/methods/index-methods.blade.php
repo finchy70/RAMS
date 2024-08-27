@@ -37,6 +37,7 @@
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Description</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Method Category</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Method</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Created By</th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -51,14 +52,17 @@
                                             {{Str::limit($item->description, 30, '...')}}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{Str::limit($item->method, 80, '...')}}
+                                            {{$item->methodCategory->category}}
+                                        </td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            {{Str::limit(strip_tags($item->method), 80, '...')}}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{$item->user->name}}
                                         </td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <button wire:click="edit({{$item->id}})" class=" py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">Edit</button>
-                                            <button wire:click="view({{$item->id}})" class="py-1 px-2 bg-gray-200 rounded ml-2 text-indigo-600 hover:text-indigo-900">View</button>
+                                            <a href="{{route('methods.show', $item->id)}}" class="py-1 px-2 bg-gray-200 rounded ml-2 text-indigo-600 hover:text-indigo-900">View</a>
                                         </td>
                                     </tr>
                                 @endforeach

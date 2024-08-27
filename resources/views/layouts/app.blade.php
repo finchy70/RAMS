@@ -20,9 +20,8 @@
         <!-- Scripts -->
 {{--        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>--}}
 {{--        <script src="{{ asset('js/app.js') }}" defer></script>--}}
-        <script src="{{asset('/js/trix.js')}}"></script>
-        <script src="{{ asset('js/attachments.js') }}"></script>
-        @livewireStyles
+{{--        <script src="{{asset('/js/trix.js')}}"></script>--}}
+{{--        <script src="{{ asset('js/attachments.js') }}"></script>--}}
         @yield('scripts')
     </head>
     <body class="font-sans antialiased bg-gray-50">
@@ -31,18 +30,17 @@
         <div>
             <!-- Page Heading -->
             <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-2 px-6 sm:px-6 lg:px-8">
                     {{ $header ?? '' }}
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main class="max-w-7xl mx-auto py-6 px-6 sm:px-6 lg:px-8">
+            <main class="mx-auto py-6 px-6 sm:px-6 lg:px-8">
                 <div>
                     {{ $slot }}
                 </div>
             </main>
         </div>
-    @livewireScripts
     </body>
 </html>

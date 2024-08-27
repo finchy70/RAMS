@@ -19,12 +19,17 @@ class IndexMethods extends Component
         $this->all = !$this->all;
     }
 
+    public function newMethod(): void
+    {
+        $this->redirect(route('methods.create'));
+    }
+
     public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
         if($this->all){
-            $methods = Method::query()->orderBy('description')->paginate(15);
+            $methods = Method::query()->orderBy('description')->with('methodCategory')->paginate(15);
         } else {
-            $methods = Method::query()->where('user_id', auth()->user()->id)->orderBy('description')->paginate(15);
+            $methods = Method::query()->where('user_id', auth()->user()->id)->orderBy('description')->with('methodCategory')->paginate(15);
         }
         return view('livewire.methods.index-methods', compact('methods'));
     }

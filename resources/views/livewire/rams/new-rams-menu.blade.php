@@ -5,6 +5,27 @@
 
     <div class="max-w-4xl mx-auto">
         <div class="my-2">
+            <label for="Job Number" class="text-sm font-medium leading-6 text-gray-900">Job Number</label>
+            <div class="relative mt-1">
+                <input type="number" step="1" wire:model="jobNumber" class="w-1/4 border border-gray-200 rounded-lg"/>
+        </div>
+        <div class="my-2">
+            <label for="Site" class="text-sm font-medium leading-6 text-gray-900">Site</label>
+            <div class="relative mt-1">
+                <input type="text" wire:model="site" class="w-1/4 border border-gray-200 rounded-lg"/>
+        </div>
+        <div class="my-2">
+            <label for="clientId" class="text-sm font-medium leading-6 text-gray-900">Select Client</label>
+            <div class="relative mt-1">
+                <select wire:model='clientId' name="clientId" id="clientId" class="w-full border border-gray-200 rounded-lg">
+                    <option value='{{null}}' class="block truncate">Please Select a Client</option>
+                    @foreach($clients as $client)
+                        <option value="{{$client->id}}">{{$client->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="my-2">
             <label for="prelims" class="text-sm font-medium leading-6 text-gray-900">Preliminaries</label>
             <div class="relative mt-1">
                 <select wire:model.live='prelimId' name="prelims" id="prelims" class="w-full border border-gray-200 rounded-lg">

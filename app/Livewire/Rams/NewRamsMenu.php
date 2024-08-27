@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Rams;
 
+use App\Models\Client;
 use App\Models\Method;
 use App\Models\MethodCategory;
 use App\Models\Prelim;
@@ -14,6 +15,7 @@ use Livewire\Component;
 class NewRamsMenu extends Component
 {
     public ?int $prelimId = null;
+    public ?int $clientId = null;
     public ?int $setupId = null;
     public ?int $methodCategoryId = null;
     public ?int $methodId = null;
@@ -96,6 +98,7 @@ class NewRamsMenu extends Component
 
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $clients = Client::all();
         $prelims = Prelim::query()->orderBy('title')->get();
         $setups = SetUp::query()->orderBy('title')->get();
         $methodCategories = MethodCategory::query()->orderBy('category')->get();
@@ -108,7 +111,8 @@ class NewRamsMenu extends Component
             'prelims' => $prelims,
             'setups' => $setups,
             'methodCategories' => $methodCategories,
-            'methods' => $methods
+            'methods' => $methods,
+            'clients' => $clients
         ]);
     }
 }

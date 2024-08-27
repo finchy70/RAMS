@@ -1,5 +1,5 @@
 (function() {
-    var HOST = "http://localhost/upload"; //pass the route
+    var HOST = "https://rams.test/upload"; //pass the route
 
     addEventListener("trix-attachment-add", function(event) {
         if (event.attachment.file) {
