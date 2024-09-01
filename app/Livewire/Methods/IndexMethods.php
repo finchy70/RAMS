@@ -24,6 +24,11 @@ class IndexMethods extends Component
         $this->redirect(route('methods.create'));
     }
 
+    public function editMethod(Method $method): void
+    {
+        $this->redirect(route('methods.edit', $method));
+    }
+
     public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
         if($this->all){

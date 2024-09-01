@@ -5,6 +5,7 @@ use App\Http\Controllers\MethodController;
 use App\Http\Controllers\PictureController;
 use App\Livewire\Dashboard\UserDashboard;
 use App\Livewire\Methods\CreateMethod;
+use App\Livewire\Methods\EditMethods;
 use App\Livewire\Methods\IndexMethods;
 use App\Livewire\Prelims\IndexPrelims;
 use App\Livewire\Rams\EditRams;
@@ -42,8 +43,10 @@ Route::middleware([
     Route::get('/ppe', [])->name('ppe.index');
 
     Route::get('/methods', IndexMethods::class)->name('methods.index');
-    Route::get('/methods-create', CreateMethod::class)->name('methods.create');
-    Route::get('/methods/show/{id}', [MethodController::class, 'show'])->name('methods.show');
+    Route::get('/methods/create', [MethodController::class, 'create'])->name('methods.create');
+    Route::get('/methods/{id}/show', [MethodController::class, 'show'])->name('methods.show');
+    Route::get('/methods/{method}/edit', EditMethods::class)->name('methods.edit');
+    Route::post('/methods', [MethodController::class, 'store'])->name('methods.store');
 
     Route::get('/controls', [])->name('controls.index');
 
@@ -52,6 +55,6 @@ Route::middleware([
     Route::get('/data-setup', [])->name('data-setup.index');
 });
 
-Route::post('/upload', [PictureController::class, 'upload'])->name('picture.upload');
+Route::post('/tiny-image-upload', [PictureController::class, 'upload'])->name('picture.upload');
 
 Route::get('/errors/401', [ErrorController::class, 'error401'])->name('errors.401');

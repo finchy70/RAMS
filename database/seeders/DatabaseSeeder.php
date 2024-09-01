@@ -38,15 +38,17 @@ class DatabaseSeeder extends Seeder
             'name' => 'EPS'
         ]);
 
-        Rams::factory()
-            ->for($user)
-            ->count(20)
-            ->create();
+        Method::factory()->count(5)->create();
 
-        Rams::factory()
-            ->for($secondUser)
-            ->count(20)
-            ->create();
+//        Rams::factory()
+//            ->for($user)
+//            ->count(20)
+//            ->create();
+//
+//        Rams::factory()
+//            ->for($secondUser)
+//            ->count(20)
+//            ->create();
     }
 
 }

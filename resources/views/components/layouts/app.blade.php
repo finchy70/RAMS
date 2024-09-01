@@ -24,7 +24,7 @@
 {{--        <script src="{{asset('/js/trix.js')}}"></script>--}}
 {{--        <script src="{{ asset('js/attachments.js') }}"></script>--}}
         @yield('scripts')
-
+        <x-head.tinymce-config/>
     </head>
     <body class="font-sans antialiased">
         <div class="bg-gray-500">

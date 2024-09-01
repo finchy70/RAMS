@@ -26,7 +26,7 @@
 
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <x-button.primary wire:click='newMethod' >Add New Method</x-button.primary>
+                    <a href="{{route('methods.create')}}">Add New Method</a>
                 </div>
             </div>
             <div class="mt-8 flow-root">
@@ -61,7 +61,7 @@
                                             {{$item->user->name}}
                                         </td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <button wire:click="edit({{$item->id}})" class=" py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">Edit</button>
+                                            <button wire:click="editMethod({{$item->id}})" class=" py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">Edit</button>
                                             <a href="{{route('methods.show', $item->id)}}" class="py-1 px-2 bg-gray-200 rounded ml-2 text-indigo-600 hover:text-indigo-900">View</a>
                                         </td>
                                     </tr>

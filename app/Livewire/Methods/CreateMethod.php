@@ -96,6 +96,7 @@ class CreateMethod extends Component
             ]
         );
 
+
         Method::query()->create([
             'user_id' => auth()->user()->id,
             'description' => $data['description'],
