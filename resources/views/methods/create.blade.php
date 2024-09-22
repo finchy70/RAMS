@@ -24,9 +24,9 @@
                 {{--            <x-input.group label="Create Method" for="method" :error="$errors->first('method')">--}}
                 {{--                <x-input.rich-text wire:model="method" name="method" id="method"></x-input.rich-text>--}}
                 {{--            </x-input.group>--}}
-                <x-label class="text-2xl mb-4">Method</x-label>
-                <textarea id="tiny" name="method"></textarea>
-
+                <x-input.group label="Method Title" for="description" :error="$errors->first('description')">
+                    <x-input.textarea id="tiny" name="method"></x-input.textarea>
+                </x-input.group>
                 <div class="mt-2 row flex justify-end">
                     <x-button.primary type="submit">Save</x-button.primary>
                 </div>

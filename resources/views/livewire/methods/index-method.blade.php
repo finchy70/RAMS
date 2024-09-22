@@ -26,7 +26,7 @@
 
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <a href="{{route('methods.create')}}">Add New Method</a>
+                    <x-button.a href="{{route('methods.create')}}" class="py-2 px-4 text-center border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-gray-700 active:bg-gray-50 active:text-gray-800 hover:text-gray-500">Add New Method</x-button.a>
                 </div>
             </div>
             <div class="mt-8 flow-root">
@@ -61,8 +61,11 @@
                                             {{$item->user->name}}
                                         </td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <button wire:click="editMethod({{$item->id}})" class=" py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">Edit</button>
-                                            <a href="{{route('methods.show', $item->id)}}" class="py-1 px-2 bg-gray-200 rounded ml-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                            <div class="row flex justify-end space-x-2">
+                                                <button wire:click="copyMethod({{$item->id}})" class=" py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">Copy</button>
+                                                <button wire:click="editMethod({{$item->id}})" class=" py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">Edit</button>
+                                                <a href="{{route('methods.show', $item->id)}}" class="py-1 px-2 bg-gray-200 rounded text-indigo-600 hover:text-indigo-900">View</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

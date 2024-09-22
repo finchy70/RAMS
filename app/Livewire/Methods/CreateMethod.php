@@ -25,11 +25,11 @@ class CreateMethod extends Component
     public bool $showEditModal = false;
     public ?Method $editing = null;
     public string $modalTitle;
-    public string $description = '';
-    public string $method = '';
+    public string $methodDescription = '';
+    public string $methodMethod = '';
     public ?Collection $methodCategories;
     public $catSort;
-    public ?int $method_category_id = null;
+    public ?int $methodCategoryId = null;
     public ?int $oldCatId = null;
     public $methodCategory;
     public $oldSearch;
@@ -87,21 +87,20 @@ class CreateMethod extends Component
     {
         $data = $this->validate(
             [
-                'description' => ['required'],
-                'method_category_id' => 'required',
-                'method' => 'required'
+                'methodDescription' => ['required'],
+                'methodCategoryId' => 'required',
+                'methodMethod' => 'required'
             ],
             [
-                'editing.method_category_id.required' => 'A Method Category must be selected.'
+                'method_category_id.required' => 'A Method Category must be selected.'
             ]
         );
 
-
         Method::query()->create([
             'user_id' => auth()->user()->id,
-            'description' => $data['description'],
-            'method_category_id' => $data['method_category_id'],
-            'method' => $data['method']
+            'description' => $data['methodDescription'],
+            'method_category_id' => $data['methodCategoryId'],
+            'method' => $data['methodMethod']
         ]);
 
         Session::flash('success', 'Method has been created.');
@@ -142,6 +141,6 @@ class CreateMethod extends Component
         $methods = $this->getMethodList();
         $this->oldCatId = $this->categoryView;
         $this->oldSearch = $this->search;
-        return view('livewire.methods.create', compact('methods'));
+        return view('livewire.methods.create-method', compact('methods'));
     }
 }

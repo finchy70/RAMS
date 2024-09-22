@@ -9,7 +9,7 @@ use Illuminate\Foundation\Application;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class IndexMethods extends Component
+class IndexMethod extends Component
 {
     public bool $all = false;
 
@@ -26,8 +26,21 @@ class IndexMethods extends Component
 
     public function editMethod(Method $method): void
     {
-        $this->redirect(route('methods.edit', $method));
+        $this->redirect(route('methods.edit', $method->id));
     }
+
+    public function copyMethod(Method $method): void
+    {
+        $newMethod = Method::query()->create([
+            'description' => $method->description.' - Copy',
+            'user_id' => auth()->user()->id,
+            'method_category_id' => $method->method_category_id,
+            'method' => $method->method,
+        ]);
+
+        $this->redirect(route('methods.edit', $newMethod->id));
+    }
+
 
     public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
@@ -36,6 +49,6 @@ class IndexMethods extends Component
         } else {
             $methods = Method::query()->where('user_id', auth()->user()->id)->orderBy('description')->with('methodCategory')->paginate(15);
         }
-        return view('livewire.methods.index-methods', compact('methods'));
+        return view('livewire.methods.index-method', compact('methods'));
     }
 }
