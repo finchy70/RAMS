@@ -46,7 +46,7 @@ class EditMethod extends Component
             'method' => $data['methodMethod']
         ]);
 
-        Session::flash('success', 'Method has been created.');
+        Session::flash('success', 'Method has been updated.');
         $this->redirectRoute('methods.index');
     }
 

@@ -14,6 +14,17 @@
             editor.on('init change', function () {
                 editor.save();
             })
+            editor.on('keydown', function(e){
+                if ((e.keyCode == 8 || e.keyCode == 46) && tinymce.activeEditor.selection) {
+                    var selectedNode = tinymce.activeEditor.selection.getNode();
+                    if (selectedNode && selectedNode.nodeName == 'IMG') {
+                        formData = new FormData();
+                        var imageSrc = selectedNode.src;
+                        formData.append('file', imageSrc)
+                        axios.post('https://rams.test/tiny-image-delete', formData)
+                    }
+                }
+            })
             editor.on('blur', function(e) {
                 value = editor.getContent()
             })

@@ -56,5 +56,6 @@ Route::middleware([
 });
 
 Route::post('/tiny-image-upload', [PictureController::class, 'upload'])->name('picture.upload');
+Route::post('/tiny-image-delete', [PictureController::class, 'delete'])->name('picture.delete');
 
 Route::get('/errors/401', [ErrorController::class, 'error401'])->name('errors.401');

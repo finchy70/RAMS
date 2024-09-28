@@ -1,4 +1,4 @@
-<div>
+<div class="mx-auto max-w-7xl">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{auth()->user()->name}} - Methods</h2>
     </x-slot>
@@ -25,7 +25,7 @@
                     </x-button.secondary>
 
                 </div>
-                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-none">
                     <x-button.a href="{{route('methods.create')}}" class="py-2 px-4 text-center border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-gray-700 active:bg-gray-50 active:text-gray-800 hover:text-gray-500">Add New Method</x-button.a>
                 </div>
             </div>
@@ -49,13 +49,13 @@
                                 @foreach($methods as $item)
                                     <tr>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{Str::limit($item->description, 30, '...')}}
+                                            {{Str::limit($item->description, 20, '...')}}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{$item->methodCategory->category}}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{Str::limit(strip_tags($item->method), 80, '...')}}
+                                            {{Str::limit(strip_tags($item->method), 50, '...')}}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{$item->user->name}}
