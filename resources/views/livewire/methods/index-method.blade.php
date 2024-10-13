@@ -7,23 +7,8 @@
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
-                    @if($all)
-                        <h1 class="text-2xl font-semibold leading-6 text-gray-900">All Methods</h1>
-                        <p class="mt-2 text-sm text-gray-700">A list of all the Methods created.</p>
-                    @else
-                        <h1 class="text-2xl font-semibold leading-6 text-gray-900">Your Methods</h1>
-                        <p class="mt-2 text-sm text-gray-700">A list of all the Methods you have created.</p>
-                    @endif
-                </div>
-                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <x-button.secondary wire:click='toggle' >
-                        @if($all)
-                            View Your Methods
-                        @else
-                            View All Methods
-                        @endif
-                    </x-button.secondary>
-
+                    <h1 class="text-2xl font-semibold leading-6 text-gray-900">All Methods</h1>
+                    <p class="mt-2 text-sm text-gray-700">A list of all the Methods created.</p>
                 </div>
                 <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-none">
                     <x-button.a href="{{route('methods.create')}}" class="py-2 px-4 text-center border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-gray-700 active:bg-gray-50 active:text-gray-800 hover:text-gray-500">Add New Method</x-button.a>
@@ -36,10 +21,40 @@
                             <table class="min-w-full divide-y divide-gray-300">
                                 <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Description</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Method Category</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Method</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Created By</th>
+                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                        <div class="ml-1">Description</div>
+                                        <div>
+                                            <x-input class="text-xs" type="text" id="searchDescription" name="searchDescription" wire:model.live.debounce.350ms="searchDescription" placeholder="Search Description..."/>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        <div class="ml-1">Method Category</div>
+                                        <div>
+                                            <select class="w-full text-xs rounded-md shadow-sm overflow-hidden text-gray-500 border-gray-300" type="text" id="searchSelectedMethodCategory" name="searchSelectedMethodCategory" wire:model.live="searchSelectedMethodCategory">
+                                                <option class="text-xs" value="9999">All Categories</option>
+                                                @foreach($methodCategories as $key=>$methodCategory)
+                                                    <option class="text-xs" value="{{$key}}">{{$methodCategory}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        <div class="ml-1">Method</div>
+                                        <div>
+                                            <x-input class="text-xs w-3/4" type="text" id="searchMethod" name="searchMethod" wire:model.live.debounce.350ms="searchMethod" placeholder="Search Method..."/>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="py-3.5 pl-2 pr-3 text-left text-sm font-semibold text-gray-900">
+                                        <div class="ml-1">Created By</div>
+                                        <div>
+                                            <select class="w-full text-xs rounded-md shadow-sm overflow-hidden text-gray-500 border-gray-300" type="text" id="searchSelectedUser" name="searchSelectedUser" wire:model.live="searchSelectedUser">
+                                                <option class="text-xs" value="9999">All Users</option>
+                                                @foreach($users as $key=>$user)
+                                                    <option class="text-xs" value="{{$key}}">{{$user}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Edit</span>
                                     </th>

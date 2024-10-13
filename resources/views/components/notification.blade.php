@@ -1,5 +1,5 @@
 <div x-cloak x-data="{ showSuccess: false, message: '' }"
-     x-on:notify-success.window=" showSuccess = true; message = $event.detail;  setTimeout(() => { showSuccess = false }, 7000) "
+     x-on:notify-success=" showSuccess = true; message = $event.detail;  setTimeout(() => { showSuccess = false }, 7000) "
      aria-live="assertive" class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start">
     <div class="w-full flex flex-col items-center space-y-4 sm:items-end">
         <div x-show="showSuccess" x-transition:enter="transform ease-out duration-300 transition"
@@ -40,7 +40,7 @@
     </div>
 </div>
 <div x-cloak x-data="{ showInfo: false, message: '' }"
-     x-on:notify-info.window=" showInfo = true; message = $event.detail;  setTimeout(() => { showInfo = false }, 7000) "
+     x-on:notify-info=" showInfo = true; message = $event.detail;  setTimeout(() => { showInfo = false }, 7000) "
      aria-live="assertive" class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start">
     <div class="w-full flex flex-col items-center space-y-4 sm:items-end">
         <!-- Notification panel, dynamically insert this into the live region when it needs to be displayed -->

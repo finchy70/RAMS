@@ -38,7 +38,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'EPS'
         ]);
 
-        Method::factory()->count(5)->create();
+        Method::factory()->count(5)->set('user_id', 1)->create();
+        Setup::factory()->count(5)->set('user_id', 1)->create();
 
 //        Rams::factory()
 //            ->for($user)

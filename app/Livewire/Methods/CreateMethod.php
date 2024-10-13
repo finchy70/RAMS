@@ -4,6 +4,7 @@ namespace App\Livewire\Methods;
 
 use App\Models\Method;
 use App\Models\MethodCategory;
+use App\Models\SetUp;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -18,129 +19,45 @@ class CreateMethod extends Component
 {
     use WithPagination;
 
-    public string $search = "";
-    public string $field = "description";
-    public string $sortField = 'description';
-    public string $sortDirection = 'asc';
-    public bool $showEditModal = false;
-    public ?Method $editing = null;
-    public string $modalTitle;
+    public array $methodCategories = [];
     public string $methodDescription = '';
     public string $methodMethod = '';
-    public ?Collection $methodCategories;
-    public $catSort;
     public ?int $methodCategoryId = null;
-    public ?int $oldCatId = null;
-    public $methodCategory;
-    public $oldSearch;
-    public $categoryView;
 
-
-    public function sortBy($field = "description"): void
+    public function mount(): void
     {
-        if ($this->sortField == $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortDirection = 'asc';
-        }
-        $this->sortField = $field;
+        $this->methodCategories = MethodCategory::query()->orderBy('category')->pluck('category', 'id')->toArray();
     }
-
-    public function create(): void
-    {
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankMethod();
-        $this->modalTitle = "Create New Method";
-        $this->resetErrorBag();
-        $this->showEditModal = true;
-    }
-
-    public function edit(Method $method): void
-    {
-        if ($this->editing->isNot($method)) $this->editing = $method;
-        $this->modalTitle = "Edit Method";
-        $this->resetErrorBag();
-        $this->showEditModal = true;
-    }
-
-    public function duplicate(Method $method): void
-    {
-        $this->editing = new Method;
-        $this->editing->description = $method->description . " - copy";
-        $this->editing->method = $method->method;
-        $this->modalTitle = "Duplicate Method";
-        $this->resetErrorBag();
-        $this->showEditModal = true;
-    }
-
-    public function updatedCategoryView(): void
-    {
-        $this->search = "";
-
-    }
-
-    public function updatedSearch(): void
-    {
-        $this->categoryView = null;
-    }
-
     public function save(): void
     {
         $data = $this->validate(
             [
+                'methodCategoryId' => ['required'],
                 'methodDescription' => ['required'],
-                'methodCategoryId' => 'required',
-                'methodMethod' => 'required'
-            ],
-            [
-                'method_category_id.required' => 'A Method Category must be selected.'
-            ]
+                'methodMethod' => ['required']
+                ]
+                ,
+                [
+                    'methodCategoryId.required' => 'You must select a Method Category.',
+                    'methodDescription.required' => 'You must enter a Method Description.',
+                    'methodMethod.required' => 'You must enter a Method.'
+                ]
         );
 
         Method::query()->create([
             'user_id' => auth()->user()->id,
             'description' => $data['methodDescription'],
-            'method_category_id' => $data['methodCategoryId'],
-            'method' => $data['methodMethod']
+            'method' => $data['methodMethod'],
+            'method_category_id' => $data['methodCategoryId']
         ]);
 
         Session::flash('success', 'Method has been created.');
         $this->redirectRoute('methods.index');
     }
 
-
-    public function getMethodList(): mixed
-    {
-        if ($this->search == null && $this->categoryView == null) {
-            if ($this->oldCatId == $this->categoryView) {
-                return $methods = Method::search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->with('category_asc')->paginate(10);
-            } else {
-                return $methods = Method::search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->with('category_asc')->paginate(10, ['*'], 'page', 1);
-            }
-        } elseif ($this->search != null) {
-            if ($this->categoryView == null) {
-                if ($this->oldSearch == $this->search) {
-                    return $methods = Method::search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10);
-                } else {
-                    return $methods = Method::search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10, ['*'], 'page', 1);
-                }
-            }
-        } elseif ($this->categoryView != null) {
-            if ($this->search == null) {
-                if ($this->oldCatId == $this->categoryView) {
-                    return $methods = Method::where('method_category_id', $this->categoryView)->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10);
-                } else {
-                    return $methods = Method::where('method_category_id', $this->categoryView)->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10, ['*'], 'page', 1);
-                }
-            }
-        }
-    }
-
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $this->methodCategories = MethodCategory::orderBy('category', 'asc')->get();
-        $methods = $this->getMethodList();
-        $this->oldCatId = $this->categoryView;
-        $this->oldSearch = $this->search;
+        $methods = $this->methodCategories;
         return view('livewire.methods.create-method', compact('methods'));
     }
 }

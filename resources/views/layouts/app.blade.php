@@ -16,7 +16,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @yield('scripts')
-        <x-head.tinymce-config/>
+{{--        <x-head.tinymce-config/>--}}
     </head>
     <body class="font-sans antialiased bg-gray-50">
         @include('layouts.navigation')

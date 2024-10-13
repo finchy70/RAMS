@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SetUp extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     public function user(): belongsTo
     {
         return $this->belongsTo(User::class);
