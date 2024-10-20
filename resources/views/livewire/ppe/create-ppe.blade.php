@@ -75,7 +75,7 @@
                             </div>
                             <div class="mt-4 row flex justify-end space-x-4">
                                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
-                                <x-button.primary type="submit">Save</x-button.primary>
+                                <x-button.primary type="submit">{{$actionButton}}</x-button.primary>
                             </div>
                         </div>
                     </div>

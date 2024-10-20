@@ -13,20 +13,28 @@ use Session;
 class CreatePpe extends Component
 {
     use WithPagination;
-    public $search = "";
-    public $sortField = 'item';
-    public $sortDirection = 'asc';
-    public $item;
-    public $showEditModal = false;
+    public string $search = "";
+    public string $sortField = 'item';
+    public string $sortDirection = 'asc';
+    public string $actionButton = '';
+    public string $item = '';
+    public bool $showEditModal = false;
     public Ppe $editing;
-    public $modalTitle;
+    public string $modalTitle;
 
 
     public function rules(): array
     {
-        return [
-            'editing.item' => ['required', Rule::unique('ppes', 'item')->ignore($this->editing->id)],
-        ];
+        if($this->actionButton == 'Save'){
+            return [
+                'editing.item' => ['required', 'unique:ppes,item'],
+            ];
+        } else {
+            return [
+                'editing.item' => ['required', Rule::unique('ppes', 'item')->ignore($this->editing->id)],
+            ];
+        }
+
     }
 
     public function sortBy($field = "item"): void
@@ -41,7 +49,7 @@ class CreatePpe extends Component
     public function makeBlankPpe()
     {
         return Ppe::make([
-            'item' => ""
+            'item' => "",
         ]);
     }
 
@@ -61,16 +69,26 @@ class CreatePpe extends Component
     {
         if ($this->editing->isNot($ppe)) $this->editing = $ppe;
         $this->modalTitle = "Edit PPE";
+        $this->actionButton = "Update";
         $this->showEditModal = true;
     }
 
     public function save(): void
     {
-        $this->validate(
-            ['editing.item' => ['required']]
-        );
+        if($this->actionButton == 'Save'){
+            $this->validate([
+                'editing.item' => ['required', 'unique:ppes,item']
+            ]);
+        } else {
+
+            $this->validate([
+                'editing.item' => ['required', 'unique:ppes,item,' . $this->editing->id],
+            ]);
+        }
+
         $this->editing->save();
         $this->makeBlankPpe();
+        $this->actionButton = "Save";
         $this->showEditModal = false;
         Session::flash("success", "PPE has been updated!");
     }

@@ -42,21 +42,16 @@ Route::middleware([
     Route::get('/rams-create', [])->name('rams.create');
     Route::get('/edit-rams/{rams}', EditRams::class)->name('editRams');
 
-    Route::get('/setup', IndexSetups::class)->name('setup.index');
-    Route::get('/setup/create', CreateSetup::class)->name('setup.create');
-    Route::get('/setup/{id}/show', [SetupController::class, 'show'])->name('setup.show');
-    Route::get('/setup/{setup}/edit', EditSetup::class)->name('setup.edit');
-    Route::post('/setup', [SetupController::class, 'store'])->name('setup.store');
+
+    Route::get('/setup/create', CreateSetup::class)->name('setup');
+
 
     Route::get('/prelims', IndexPrelims::class)->name('prelims.index');
 
     Route::get('/ppe',CreatePpe::class)->name('ppe.index');
 
-    Route::get('/methods', IndexMethod::class)->name('methods.index');
-    Route::get('/methods/create', CreateMethod::class)->name('methods.create');
-    Route::get('/methods/{id}/show', [MethodController::class, 'show'])->name('methods.show');
-    Route::get('/methods/{method}/edit', EditMethod::class)->name('methods.edit');
-    Route::post('/methods', [MethodController::class, 'store'])->name('methods.store');
+
+    Route::get('/methods/create', CreateMethod::class)->name('methods');
 
     Route::get('/controls', CreateControl::class)->name('controls.index');
 
