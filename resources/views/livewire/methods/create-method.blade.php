@@ -68,29 +68,34 @@
         <x-modal.dialog id="modal" maxWidth="5xl" maxHeight="h-fit" wire:model.defer="showEditModal">
             <x-slot name="title">{{$modalTitle}}</x-slot>
             <x-slot name="content">
-                <div class="row flex justify-between">
-                    <x-input.group for="title" inline="true" label="Method Description" :error="$errors->first('editing.description')">
-                        <x-input.text class="w-full" wire:model="editing.description" name="title"></x-input.text>
-                    </x-input.group>
+                <div class="space-y-4">
+                    <div>
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="method_category_id">
+                                Method Category
+                            </label>
+                        </div>
 
-                    <div class="mt-4">
-                        <label class="block font-medium text-sm text-gray-700" for="editing.method_category_id">
-                            Method Category
-                        </label>
-                        <select wire:model="editing.method_category_id" name="editing.method_category_id"
-                                class="mt-2 text-sm sm:text-base pl-2 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400">
+                        <select wire:model="editing.method_category_id" name="method_category_id"
+                                class="mt-2 text-sm pl-2 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400">
                             <option value="">-- Choose Method Category --</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->category }}</option>
                             @endforeach
                         </select>
-                    @error('editing.method_category_id')<span class="mt-1 text-red-500 text-sm">{{$message}}</span> @enderror
+                        @error('editing.method_category_id')<span class="mt-1 text-red-500 text-sm">{{$message}}</span> @enderror
                     </div>
+                    <x-input.group for="title" inline="true" label="Method Description" :error="$errors->first('editing.description')">
+                        <x-input.text class="w-full" wire:model="editing.description" name="title"></x-input.text>
+                    </x-input.group>
+
+                    <x-input.group class="mt-4" for="method" inline="true" label="Method" :error="$errors->first('editing.method')">
+                        <x-input.tinymce wire:model="editing.method" name="method" />
+                    </x-input.group>
                 </div>
 
-                <x-input.group for="method" inline="true" label="Method" :error="$errors->first('editing.method')">
-                    <x-input.tinymce wire:model="editing.method" name="editing.method" />
-                </x-input.group>
+
+
             </x-slot>
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>

@@ -13,6 +13,7 @@ use App\Livewire\Ppe\CreatePpe;
 use App\Livewire\Prelims\IndexPrelims;
 use App\Livewire\Rams\EditRams;
 use App\Livewire\Rams\NewRamsMenu;
+use App\Livewire\Risks\CreateRisks;
 use App\Livewire\Setups\CreateSetup;
 use App\Livewire\Setups\EditSetup;
 use App\Livewire\Setups\IndexSetups;
@@ -46,16 +47,16 @@ Route::middleware([
     Route::get('/setup/create', CreateSetup::class)->name('setup');
 
 
-    Route::get('/prelims', IndexPrelims::class)->name('prelims.index');
+    Route::get('/prelims', IndexPrelims::class)->name('prelims');
 
-    Route::get('/ppe',CreatePpe::class)->name('ppe.index');
+    Route::get('/ppe',CreatePpe::class)->name('ppe');
 
 
     Route::get('/methods/create', CreateMethod::class)->name('methods');
 
-    Route::get('/controls', CreateControl::class)->name('controls.index');
+    Route::get('/controls', CreateControl::class)->name('controls');
 
-    Route::get('/risks', [])->name('risks.index');
+    Route::get('/risks', CreateRisks::class)->name('risks');
 
     Route::get('/data-setup', [])->name('data-setup.index');
 

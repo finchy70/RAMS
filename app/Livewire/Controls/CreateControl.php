@@ -2,74 +2,43 @@
 
 namespace App\Livewire\Controls;
 
+use App\Models\Client;
 use App\Models\Control;
 use App\Models\ControlType;
-use App\Models\Method;
-use App\Models\MethodCategory;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
+use App\Models\SetUp;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CreateControl extends Component
 {
-    public Control $editing;
+    use WithPagination;
+
     public string $search = "";
-    public string $oldSearch;
-    public $controlView;
-    public $oldCatId;
-    public $field = "control";
-    public $sortField = "control";
-    public $sortDirection = "asc";
-    public $showEditModal = false;
-    public $showViewModal = false;
-    public ?Control $showControl = null;
-    public $modalTitle;
+    public string $sortField = 'control_description';
+    public string $sortDirection = 'asc';
+    public string $title = '';
+    public bool $showEditModal = false;
+    public Control $editing;
+    public string $modalTitle = '';
+    public string $actionButton = '';
+
+    public Collection $controlTypes;
 
 
-    public function rules()
+    public function rules(): array
     {
         return [
-            'editing.control_description' => ['required', Rule::unique('controls', 'control_description')->ignore($this->editing->id)],
+            'editing.control_description' => 'required',
+            'editing.control' => 'required',
             'editing.control_type_id' => 'required',
-            'editing.control' => 'required'
+            'editing.user_id' => 'required'
         ];
     }
 
-    public function mount()
+    public function sortBy($field = "title"): void
     {
-        $this->editing = $this->makeBlankControl();
-    }
-
-    public function create()
-    {
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankControl();
-        $this->modalTitle = "Create New Control";
-        $this->resetErrorBag();
-        $this->showEditModal = true;
-    }
-
-    public function edit(Control $control)
-    {
-        if ($this->editing->isNot($control)) $this->editing = $control;
-        $this->modalTitle = "Edit Control";
-        $this->resetErrorBag();
-        $this->showEditModal = true;
-    }
-
-    public function duplicate(Control $control)
-    {
-        $this->editing = new Control;
-        $this->editing->control_description = $control->control_description . " - copy";
-        $this->editing->control = $control->control;
-        $this->modalTitle = "Duplicate Control";
-        $this->resetErrorBag();
-        $this->showEditModal = true;
-    }
-
-    public function sortBy($field = "control")
-    {
-        if ($this->sortField = $field) {
+        if ($this->sortField == $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortDirection = 'asc';
@@ -80,9 +49,44 @@ class CreateControl extends Component
     public function makeBlankControl(): Control
     {
         return Control::query()->make([
-            'control_description' => " ",
-            'control_type_id' => " ",
-            'control' => " "]);
+            'control_type_id' => '',
+            'control_description' => "",
+            'control' => "",
+            'user_id' => ""
+        ]);
+    }
+
+    public function mount(): void
+    {
+        $this->editing = $this->makeBlankControl();
+    }
+
+    public function create(): void
+    {
+        if ($this->editing->getKey()) $this->editing = $this->makeBlankControl();
+        $this->modalTitle = "Create New Control";
+        $this->actionButton = 'Save';
+        $this->showEditModal = true;
+    }
+
+    public function edit(Control $control): void
+    {
+        if ($this->editing->isNot($control)) $this->editing = $control;
+        $this->modalTitle = "Edit Control";
+        $this->showEditModal = true;
+        $this->actionButton = 'Update';
+    }
+
+    public function duplicate(Control $control): void
+    {
+        $this->editing = new Control();
+        $this->editing->control_type_id = $control->control_type_id;
+        $this->editing->title = $control->control_description." - copy";
+        $this->editing->setup = $control->control;
+        $this->editing->user_id = auth()->user()->id;
+        $this->actionButton = 'Save Copy';
+        $this->modalTitle = "Duplicate Control";
+        $this->showEditModal = true;
     }
 
     public function save(): void
@@ -93,45 +97,12 @@ class CreateControl extends Component
         $this->showEditModal = false;
     }
 
-    public function getControlList(): LengthAwarePaginator
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        if ($this->search == null && $this->controlView == null) {
-            if ($this->oldCatId == $this->controlView) {
-                return $controls = Control::query()->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->with('type_asc')->paginate(10);
-            } else {
-                return $controls = Control::query()->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->with('type_asc')->paginate(10, ['*'], 'page', 1);
-            }
-        } elseif ($this->search != null) {
-            if ($this->controlView == null) {
-                if ($this->oldSearch == $this->search) {
-                    return $controls = Control::query()->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10);
-                } else {
-                    return $controls = Control::query()->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10, ['*'], 'page', 1);
-                }
-            }
-        } elseif ($this->controlView != null) {
-            if ($this->search == null) {
-                if ($this->oldCatId == $this->controlView) {
-                    return $controls = Control::query()->where('control_type_id', $this->controlView)->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10);
-                } else {
-                    return $controls = Control::query()->where('control_type_id', $this->controlView)->search($this->field, $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10, ['*'], 'page', 1);
-                }
-            }
-        }
-    }
-
-    public function view(Control $control): void
-    {
-        $this ->showViewModal = true;
-        $this->showControl = $control;
-    }
-
-    public function render()
-    {
-        $control_types = ControlType::query()->orderBy('type', 'asc')->get();
-        $controls = $this->getControlList();
-        $this->oldCatId = $this->controlView;
-        $this->oldSearch = $this->search;
-        return view('livewire.controls.create-control', compact('controls', 'control_types'));
+        $this->controlTypes = ControlType::query()->orderBy('type')->get();
+        $controlsList = Control::query()->search('control_description', $this->search)->orderBy($this->sortField, $this->sortDirection)->paginate(10);
+        return view('livewire.controls.create-control', [
+            'controls' => $controlsList
+        ]);
     }
 }

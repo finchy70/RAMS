@@ -35,7 +35,7 @@
                             <a href="{{route('dashboard')}}" class="{{request()->route()->named('dashboard*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Dashboard
                             </a>
-                            <a href="{{route('prelims.index')}}" class="{{request()->route()->named('prelims*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="{{route('prelims')}}" class="{{request()->route()->named('prelims*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Prelims
                             </a>
                             <a href="{{route('setup')}}" class="{{request()->route()->named('setup*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
@@ -44,14 +44,14 @@
                             <a href="{{route('methods')}}" class="{{request()->route()->named('methods*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Methods
                             </a>
-                            <a href="{{route('ppe.index')}}" class="{{request()->route()->named('ppe*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="{{route('ppe')}}" class="{{request()->route()->named('ppe*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 PPE
                             </a>
-                            <a href="{{route('controls.index')}}" class="{{request()->route()->named('controls.*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="{{route('controls')}}" class="{{request()->route()->named('controls*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Controls
                             </a>
                             </a>
-                            <a href="{{route('risks.index')}}" class="{{request()->route()->named('risks*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="{{route('risks')}}" class="{{request()->route()->named('risks*')?'border-indigo-500 text-gray-900':'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Risks
                             </a>
                             @if(request()->route()->named('data-setup.*') || request()->route()->named('control-types.*'))
@@ -96,13 +96,12 @@
             <div x-show="mobileOpen" class="md:hidden" id="mobile-menu">
                 <div class="pt-2 pb-4 space-y-1">
                     <a href="{{route('dashboard')}}#" class="{{request()->route()->named('dashboard*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
-                    <a href="{{route('prelims.index')}}#" class="{{request()->route()->named('prelims*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Prelims</a>
+                    <a href="{{route('prelims')}}#" class="{{request()->route()->named('prelims*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Prelims</a>
                     <a href="{{route('setup')}}#" class="{{request()->route()->named('setup*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Set Ups</a>
                     <a href="{{route('methods')}}#" class="{{request()->route()->named('methods*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Methods</a>
-                    <a href="{{route('ppe.index')}}#" class="{{request()->route()->named('ppe*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">PPE</a>
-                    <a href="{{route('controls.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Controls</a>
-                    <a href="{{route('risks.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Risks</a>
-                    <a href="{{route('risks.index')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Data Setup</a>
+                    <a href="{{route('ppe')}}#" class="{{request()->route()->named('ppe*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">PPE</a>
+                    <a href="{{route('controls')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Controls</a>
+                    <a href="{{route('risks')}}#" class="{{request()->route()->named('risks*')?'text-indigo-400 bg-gray-50':'text-gray-500'}} border-transparent  hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Risks</a>
                     <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium" onclick="event.preventDefault(); document.getElementById('logout-form1').submit();">Sign Out</a>
                 </div>
             </div>

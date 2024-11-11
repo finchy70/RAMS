@@ -56,12 +56,14 @@
         <x-modal.dialog maxWidth="5xl" maxHeight="h-fit" wire:model.defer="showEditModal">
             <x-slot name="title">{{$modalTitle}}</x-slot>
             <x-slot name="content">
-                <x-input.group for="title" label="Setup Title" :error="$errors->first('title')">
-                    <x-input.text wire:model="editing.title" name="title"></x-input.text>
-                </x-input.group>
-                <x-input.group for="setup" inline="true" label="Setup Description" :error="$errors->first('setup')">
-                    <x-input.tinymce wire:model="editing.setup" name="editing.setup" />
-                </x-input.group>
+                <div class="space-y-8">
+                    <x-input.group for="title" label="Setup Title" :error="$errors->first('title')">
+                        <x-input.text wire:model="editing.title" name="title"></x-input.text>
+                    </x-input.group>
+                    <x-input.group for="setup" inline="true" label="Setup Description" :error="$errors->first('setup')">
+                        <x-input.tinymce wire:model="editing.setup" name="editing.setup" />
+                    </x-input.group>
+                </div>
             </x-slot>
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>

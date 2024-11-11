@@ -23,6 +23,7 @@ class CreatePpe extends Component
     public string $modalTitle;
 
 
+
     public function rules(): array
     {
         if($this->actionButton == 'Save'){
@@ -63,6 +64,7 @@ class CreatePpe extends Component
         if ($this->editing->getKey()) $this->editing = $this->makeBlankPpe();
         $this->modalTitle = "Create New PPE";
         $this->showEditModal = true;
+        $this->actionButton = "Save";
     }
 
     public function edit(Ppe $ppe): void
@@ -85,10 +87,8 @@ class CreatePpe extends Component
                 'editing.item' => ['required', 'unique:ppes,item,' . $this->editing->id],
             ]);
         }
-
         $this->editing->save();
         $this->makeBlankPpe();
-        $this->actionButton = "Save";
         $this->showEditModal = false;
         Session::flash("success", "PPE has been updated!");
     }

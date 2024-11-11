@@ -3,7 +3,7 @@
     'for',
     'error' => false,
     'helpText' => false,
-    'inline' => false,
+    'inline' => true,
     'paddingless' => false,
     'borderless' => false,
 ])
